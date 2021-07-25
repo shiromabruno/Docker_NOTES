@@ -63,3 +63,16 @@ if __name__ == "__main__":
 
 0.0.0.0 has a couple of different meanings, but in this context, when a server is told to listen on 0.0.0.0 that means "listen on every available network interface". The loopback adapter with IP address 127.0.0.1 from the perspective of the server process looks just like any other network adapter on the machine, so a server told to listen on 0.0.0.0 will accept connections on that interface too.
     
+-=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=-
+
+PUSH and PULL
+
+docker login 
+docker images ---> mostra as images no seu system
+docker tag python_api_ubuntu_web:latest shiromabruno/python_api ---> cria uma image (ja existente python_api_ubuntu_web do docker-compose build) nova com o nome da rota shiromabruno/python_api (que eh igual repository do portal docker)
+docker push shiromabruno/python_api ---> push para DOCKER
+
+para testar o PULL, a image ja se encontra com o latest ai no docker images, entao tem que remover antes: 
+docker rmi shiromabruno/python_api ---> remote a IMAGE
+docker pull shiromabruno/python_api:latest ---> faz PULL do site DOCKER
+docker run -p 5000:5000 shiromabruno/python_api ---> roda a IMAGE na porta definida
