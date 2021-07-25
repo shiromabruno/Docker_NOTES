@@ -1,0 +1,65 @@
+
+se alguns dos comandos pedir permisao, colocar sudo antes do comando
+sudo !! ---> executa comando anterior com sudo
+
+-=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=-
+
+Dockerfile eh receita pra criar uma nova machine pra rodar. Flexibilidade pra escolher oq tera no ENV
+
+touch Dockerfile (sem extensao)
+
+docker espera q na pasta tenha um arquivo chamado Dockerfile
+exemplo:
+FROM python:3  ---> ele faz pull "from " official repository of python (https://hub.docker.com/_/python). Vem com Ubuntu pois so python nao seria suficiente, precisa de OS. Nao precisa entao definir OS
+WORKDIR /usr/src/app ---> falar que dentro dessa maquina q roda Ubuntu e Python, eu quero que meu workdirector seja esse. Convencao essa url
+COPY requirements.txt . ---> copiar para  o currently director (nao esquecer do .) o requirements para poder instalar as dependencias (que esta na sua machine)
+RUN pip install --no-cache-dir -r requirements.txt ---> fala pra rodar o PIP (Ubuntu e Python, entao tem PIP) para instalar requirements. 
+COPY . . ---> copiar os 3 arquios .py, requirements e Docker file para dentro do sistema (/usr/src/app). Primeiro ponto eh a o caminho atual da sua machine e o segundo ponto eh /usr/src/app
+CMD ["python", "study_native_flask.py"] ---> fala pro docker to rodar um comando, que eh python study_native_flask.py na nova machine
+
+-=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=-
+
+touch requierements.txt
+
+informar que possui dependencias.txt
+Exemplo:
+FLASK
+flask_restuful
+
+
+-=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=-
+
+fora da pasta web, 
+
+touch docker-compose.yml ---> contem todos os containers (exemplo web, web2, db... [cada um sendo uma pastinha]). Ele controla todos os containers.
+Exemplo:
+version: '3' ---> versao do docker-compose, ha outros
+
+services:
+  web:
+    build: ./web  ---> esta falando que web eh um service, e faca o build dele a partir do diretorio atual na pasta web 
+      - "5000:5000" ---> portas. Tem que ser iguais ?
+** se tivesse database **
+  db:
+    build: ./db	
+    ...
+  web2:
+    build: ./web2
+    ...
+
+na mesma localizacao
+
+docker-compose build ---> faz o build executa o yml que executa a criacao e todas as images (Docikerfile e install dos requirements)
+docker-compose up ---> apos o build realizar o UP que de fato executa o container. Se alterar algo no PROGRAMA, altera, salva e roda o docker-compose up. (Nao precisa do BUILD, so precisaria do BUILD se alterar algo no Dockerfile
+
+if __name__ == "__main__":
+    #app.run()
+    #app.run(debug=True)
+    app.run(host='0.0.0.0')   ---> antes com o 127.0.0.1 era localhost da maquina, tem que ser esse 0.0.0.0 
+
+127.0.0.1 is normally the IP address assigned to the "loopback" or local-only interface. This is a "fake" network adapter that can only communicate within the same host. It's often used when you want a network-capable application to only serve clients on the same host. A process that is listening on 127.0.0.1 for connections will only receive local connections on that socket.
+
+"localhost" is normally the hostname for the 127.0.0.1 IP address. It's usually set in /etc/hosts (or the Windows equivalent named "hosts" somewhere under %WINDIR%). You can use it just like any other hostname - try "ping localhost" to see how it resolves to 127.0.0.1.
+
+0.0.0.0 has a couple of different meanings, but in this context, when a server is told to listen on 0.0.0.0 that means "listen on every available network interface". The loopback adapter with IP address 127.0.0.1 from the perspective of the server process looks just like any other network adapter on the machine, so a server told to listen on 0.0.0.0 will accept connections on that interface too.
+    
