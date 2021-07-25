@@ -69,7 +69,7 @@ PUSH and PULL
 
 docker login 
 docker images ---> mostra as images no seu system
-docker tag python_api_ubuntu_web:latest shiromabruno/python_api ---> cria uma image (ja existente python_api_ubuntu_web do docker-compose build) nova com o nome da rota shiromabruno/python_api (que eh igual repository do portal docker)
+docker tag python_api_ubuntu_web:latest shiromabruno/python_api ---> cria uma image (ja existente python_api_ubuntu_web gerado pelo docker-compose build) nova com o nome da rota shiromabruno/python_api (que eh igual repository do portal https://hub.docker.com/r/shiromabruno/python_api)
 docker push shiromabruno/python_api ---> push para DOCKER
 
 para testar o PULL, a image ja se encontra com o latest ai no docker images, entao tem que remover antes: 
