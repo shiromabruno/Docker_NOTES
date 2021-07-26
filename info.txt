@@ -1,4 +1,3 @@
-
 se alguns dos comandos pedir permisao, colocar sudo antes do comando
 sudo !! ---> executa comando anterior com sudo
 
